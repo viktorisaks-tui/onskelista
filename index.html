@@ -97,6 +97,11 @@
       object-fit: cover;
       display: block;
     }
+    /* Image focus: add one of these classes to an <img> */
+    .card__image img.focus-top    { object-position: center top; }
+    .card__image img.focus-bottom { object-position: center bottom; }
+    .card__image img.focus-left   { object-position: left center; }
+    .card__image img.focus-right  { object-position: right center; }
     .card__label {
       position: absolute;
       z-index: 1;
@@ -165,7 +170,7 @@
         <!-- CARD 1 – copy/paste this whole <a class="card"> ... </a> block to add a card -->
         <a class="card" href="https://www.ikea.com/se/sv/p/dalafar-koeksredskap-3-delar-rostfritt-stal-svartgra-70642819/">
           <div class="card__image">
-            <img src="https://www.ikea.com/se/sv/images/products/dalafar-koeksredskap-3-delar-rostfritt-stal-svartgra__1543354_pe1018679_s5.jpg?f=xl?i10c=img.resize(width:658);img.crop(width:658,height:370)" alt="" loading="lazy">
+            <img src="https://www.ikea.com/se/sv/images/products/dalafar-koeksredskap-3-delar-rostfritt-stal-svartgra__1543354_pe1018679_s5.jpg?f=xl" class="focus-bottom" alt="" loading="lazy">
           </div>
           <div class="card__content">
             <h3 class="card__title">Köksredskap från IKEA</h3>
