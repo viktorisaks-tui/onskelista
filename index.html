@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Viktors Önskelista 2026</title>
 
+  <!-- Home screen "app" -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Önskelista">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#f3f0ec">
+
   <!-- Fonts: Clash Display Semibold (Fontshare) + Archivo Regular (Google Fonts) -->
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -160,6 +170,51 @@
       transition: background .2s ease, color .2s ease;
     }
     .button-ghost:hover { background: var(--color-navy); color: #fff; }
+
+    /* ---------- "Add to home screen" banner (iPhone/iPad only) ---------- */
+    .install-banner {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: calc(12px + env(safe-area-inset-bottom));
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 12px 12px 12px 14px;
+      background: var(--color-card);
+      color: var(--color-text);
+      border-radius: var(--radius-card);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .22);
+      transform: translateY(150%);
+      transition: transform .35s ease;
+    }
+    .install-banner[hidden] { display: none; }
+    .install-banner.is-visible { transform: translateY(0); }
+    .install-banner__icon { width: 48px; height: 48px; border-radius: 11px; flex: none; }
+    .install-banner__text { margin: 0; font-size: 14px; line-height: 1.4; flex: 1; }
+    .install-banner__title {
+      display: block;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .install-banner__share { width: 16px; height: 16px; vertical-align: -2px; }
+    .install-banner__close {
+      flex: none;
+      width: 32px;
+      height: 32px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--color-background);
+      color: var(--color-text);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    body.has-install-banner { padding-bottom: 110px; }
   </style>
 </head>
 <body>
@@ -249,6 +304,41 @@
       </div>
     </section>
   </main>
+
+  <div class="install-banner" id="install-banner" role="dialog" aria-label="Lägg till på hemskärmen" hidden>
+    <img class="install-banner__icon" src="icons/apple-touch-icon.png" alt="">
+    <p class="install-banner__text">
+      <span class="install-banner__title">Spara som app</span>
+      Tryck på
+      <svg class="install-banner__share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Dela"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>
+      (ibland under ⋯) och välj <strong>”Lägg till på hemskärmen”</strong>.
+    </p>
+    <button class="install-banner__close" type="button" aria-label="Stäng">×</button>
+  </div>
+
+  <script>
+    (function () {
+      var isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      var isApp = window.navigator.standalone === true ||
+        window.matchMedia('(display-mode: standalone)').matches;
+      var dismissed = false;
+      try { dismissed = localStorage.getItem('installBannerDismissed') === '1'; } catch (e) {}
+      if (!isIOS || isApp || dismissed) return;
+
+      var banner = document.getElementById('install-banner');
+      banner.hidden = false;
+      document.body.classList.add('has-install-banner');
+      setTimeout(function () { banner.classList.add('is-visible'); }, 800);
+
+      banner.querySelector('.install-banner__close').addEventListener('click', function () {
+        banner.classList.remove('is-visible');
+        document.body.classList.remove('has-install-banner');
+        try { localStorage.setItem('installBannerDismissed', '1'); } catch (e) {}
+        setTimeout(function () { banner.hidden = true; }, 400);
+      });
+    })();
+  </script>
 
 </body>
 </html>
