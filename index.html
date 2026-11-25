@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Allt som en resa kan vara – test</title>
+
+  <!-- Fonts: Clash Display Semibold (Fontshare) + Archivo Regular (Google Fonts) -->
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400&display=swap">
+
+  <style>
+    :root {
+      --font-heading: "Clash Display", "Archivo", Arial, sans-serif;
+      --font-body: "Archivo", Arial, sans-serif;
+
+      --color-navy: #092a5e;
+      --color-light-blue: #70cbf4;
+      --color-background: #f3f0ec;
+      --color-card: #ffffff;
+      --color-text: #092a5e;
+      --color-label-bg: #092a5e;
+      --color-label-text: #ffffff;
+
+      --radius-card: 16px;
+      --shadow-card: 0 2px 6px rgba(0, 0, 0, .12);
+      --shadow-card-hover: 0 8px 20px rgba(0, 0, 0, .18);
+      --max-width: 1200px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--color-text);
+      background: var(--color-background);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    /* ---------- Cards component ---------- */
+    .cards {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 48px 16px 64px;
+    }
+    .cards__title {
+      font-size: clamp(28px, 4vw, 40px);
+      margin-bottom: 24px;
+    }
+    .cards__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 576px) { .cards__grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 992px) { .cards__grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      background: var(--color-card);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      transition: box-shadow .2s ease, transform .2s ease;
+    }
+    .card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
+    .card:focus-visible { outline: 3px solid var(--color-light-blue); outline-offset: 2px; }
+
+    .card__image {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #dde3ea;
+    }
+    .card__image img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card__label {
+      position: absolute;
+      z-index: 1;
+      top: 12px;
+      left: 12px;
+      margin: 0;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--color-label-bg);
+      color: var(--color-label-text);
+      font-size: 14px;
+    }
+
+    .card__content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 20px 20px 24px;
+    }
+    .card__title { font-size: 22px; margin-bottom: 8px; }
+    .card__text { margin: 0 0 16px; }
+
+    .card__footer { margin-top: auto; }
+    .card__price-prefix { display: block; font-size: 14px; }
+    .card__price {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 28px;
+    }
+    .card__cta {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 18px;
+    }
+    .card:hover .card__cta { text-decoration: underline; }
+
+    .cards__bottom {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .button-ghost {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      color: var(--color-navy);
+      border: 2px solid var(--color-navy);
+      border-radius: 999px;
+      padding: 12px 32px;
+      text-decoration: none;
+      transition: background .2s ease, color .2s ease;
+    }
+    .button-ghost:hover { background: var(--color-navy); color: #fff; }
+  </style>
+</head>
+<body>
+
+  <main>
+    <section class="cards">
+      <h1 class="cards__title">Allt som en resa kan vara</h1>
+
+      <div class="cards__grid">
+
+        <!-- CARD 1 – copy/paste this whole <a class="card"> ... </a> block to add a card -->
+        <a class="card" href="https://www.tui.se/erbjudanden/sista-minuten/">
+          <div class="card__image">
+            <img src="https://cdn.content.tuigroup.com/adamtui/2025_11/26_9/f61ccbfb-5a05-4ccd-a6cc-b3a1009bca97/ACC_013958-club-alla-turca-dalaman-turkey-pool-sunbedsWebOriginalCompressed.jpg?i10c=img.resize(width:658);img.crop(width:658,height:370)" alt="" loading="lazy">
+          </div>
+          <div class="card__content">
+            <h3 class="card__title">Sista minuten-resor</h3>
+            <p class="card__text">Här hittar du massor av sista minuten och prisvärda resor för dig som vill fly höstrusket och komma iväg till värmen!</p>
+            <div class="card__footer"><span class="card__cta">Boka sista minuten »</span></div>
+          </div>
+        </a>
+
+        <!-- CARD 2 -->
+        <a class="card" href="https://www.tui.se/erbjudanden/outlet/">
+          <div class="card__image">
+            <img src="https://cdn.content.tuigroup.com/adamtui/2026_6/24_10/18b92ea4-4be5-4a4d-9c2f-b47300ad3244/cc_outlet_1920x1080.png?i10c=img.resize(width:658);img.crop(width:658,height:370)" alt="" loading="lazy">
+          </div>
+          <div class="card__content">
+            <h3 class="card__title">STOR RESEOUTLET</h3>
+            <p class="card__text">Våra Black Week-erbjudanden gäller inte resor i november och december, så passa på att säkra din semester före årsskiftet redan idag.</p>
+            <div class="card__footer"><span class="card__cta">Skynda fynda »</span></div>
+          </div>
+        </a>
+
+        <!-- CARD 3 -->
+        <a class="card" href="https://www.tui.se/erbjudanden/sommarresor-2027/">
+          <div class="card__image">
+            <img src="https://cdn.content.tuigroup.com/adamtui/2017_11/28_19/2cfffe28-4ee6-4376-a151-a83901402ce3/i_0323972WebOriginalCompressed.jpg?i10c=img.resize(width:658);img.crop(width:658,height:370)" alt="" loading="lazy">
+          </div>
+          <div class="card__content">
+            <h3 class="card__title">Boka nu och börja längta</h3>
+            <p class="card__text">Boka din sommarresa 2027 redan idag. Välj bland massor av fina hotell och boka populära datum.</p>
+            <div class="card__footer"><span class="card__cta">Boka sommar 2027 »</span></div>
+          </div>
+        </a>
+
+        <!-- CARD 4 – example with label + price instead of CTA -->
+        <a class="card" href="https://www.tui.se/erbjudanden/maldiverna-resor/">
+          <div class="card__image">
+            <p class="card__label">Transfer ingår alltid!</p>
+            <img src="https://cdn.content.tuigroup.com/adamtui/2023_3/9_10/5e90bfff-28d7-4918-8a48-afc000abbd80/ACC011908-AC6919974-reehti-beach-resort-baa-atoll-maldives-water-villa-aerial.JPG?i10c=img.resize(width:658);img.crop(width:658,height:370)" alt="" loading="lazy">
+          </div>
+          <div class="card__content">
+            <h3 class="card__title">Paradiset Maldiverna 🌴</h3>
+            <p class="card__text">Turkost vatten, vita sandstränder och avkoppling i världsklass gör Maldiverna till den perfekta paradisresan.</p>
+            <div class="card__footer">
+              <span class="card__price-prefix">Res 2 pers. i 10 dagar fr.</span>
+              <span class="card__price">37 168:-</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- CARD 5 -->
+        <a class="card" href="https://www.palmademallorcamarathon.com/">
+          <div class="card__image">
+            <p class="card__label">Samarbetspartner</p>
+            <img src="https://cdn.content.tuigroup.com/adamtui/2024_3/21_13/95eb5659-c59e-41bf-8d11-b13a00d80e82/TUI_PALMA_MARATHON_F070WebOriginalCompressed.jpg?i10c=img.resize(width:658);img.crop(width:658,height:370)" alt="" loading="lazy">
+          </div>
+          <div class="card__content">
+            <h3 class="card__title">Årets julklapp? En plats på startlinjen i TUI Palma Marathon</h3>
+            <p class="card__text">Ge bort en upplevelse i jul. Skräddarsy ditt paket med flyg, hotell och startplats, allt smidigt samlat i samma bokning.</p>
+            <div class="card__footer"><span class="card__cta">Läs mer och boka här »</span></div>
+          </div>
+        </a>
+
+        <!-- CARD 6 -->
+        <a class="card" href="https://www.tui.se/h/se/hitta-din-resa?airports%5B%5D=ARN%7CCPH%7CGOT&amp;units%5B%5D=G-000000447%3ADESTINATION&amp;when=30-11-2026&amp;flexibility=true&amp;flexibleDays=14&amp;noOfAdults=2&amp;noOfChildren=0&amp;duration=7115&amp;sortHotelsField=popular">
+          <div class="card__image">
+            <p class="card__label">Charternyhet från Stockholm</p>
+            <img src="https://cdn.content.tuigroup.com/adamtui/2025_11/25_15/f729e020-8f61-41dd-97af-b3a000f85942/gettyimages-200483199-playal-de-cofete-fuerteventuraWebOriginalCompressed.jpg?i10c=img.resize(width:658);img.crop(width:658,height:370,gravity:bottom)" alt="" loading="lazy">
+          </div>
+          <div class="card__content">
+            <h3 class="card__title">4-stjärnigt på paradisön Fuerteventura</h3>
+            <p class="card__text">NU! Boka ett 4-stjärnigt hotell till riktigt bra pris på Fuerteventura, ön med milslånga sandstränder och kristallklart vatten.</p>
+            <div class="card__footer">
+              <span class="card__price-prefix">Res 1 pers. 4-stjärnigt fr.</span>
+              <span class="card__price">6 295:-</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+      <div class="cards__bottom">
+        <a class="button-ghost" href="https://www.tui.se/erbjudanden/">Alla erbjudanden</a>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
